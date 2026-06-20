@@ -1,2 +1,2 @@
 # blog.jamer.xyz
-fhugd
+somethhing for me
