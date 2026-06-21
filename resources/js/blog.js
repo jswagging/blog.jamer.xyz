@@ -1,3 +1,11 @@
+function processSpoilerImages(markdown) {
+  return markdown.replace(
+    /!\[([^\]]*)\]\(\s*\[spoiler\]\s*(\S+?)\s*\)/g,
+    (_match, alt, src) =>
+      `<span class="spoiler-image" title="Hover to reveal"><img src="${src}" alt="${alt}" /></span>`
+  );
+}
+
 function parseFrontMatter(raw) {
   const fmMatch = raw.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
   let meta = {};
@@ -55,6 +63,8 @@ async function loadAllPosts() {
         filename,
         title: meta.title || filename.replace(/\.md$/, ''),
         date: meta.date || '',
+        description: meta.description || '',
+        banner: meta.banner || '',
         body,
       };
     })

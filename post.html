@@ -8,9 +8,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
 </head>
 <body>
+  <div id="hero-mount"></div>
+
   <div class="site">
 
-    <header class="site-header no-rule">
+    <header class="site-header no-rule" id="site-header">
       <a href="index.html"><span class="site-title">blog</span></a>
     </header>
 
@@ -31,21 +33,31 @@
       const article = document.getElementById('post-article');
 
       if (!filename) {
-        article.innerHTML = '<p class="empty-state">No entry specified.</p>';
+        article.innerHTML = '<p class="empty-state">No blog post specified.</p>';
         return;
       }
 
       try {
         const { meta, body } = await loadPost(filename);
         const title = meta.title || filename.replace(/\.md$/, '');
-        document.getElementById('page-title').textContent = title + ' — blog';
+        document.getElementById('page-title').textContent = title + ' - blog';
+
+        if (meta.banner) {
+          document.body.classList.add('has-banner');
+          document.getElementById('site-header').style.display = 'none';
+          document.getElementById('hero-mount').innerHTML = `
+            <div class="post-hero" style="background-image: url('${meta.banner}');">
+              <a class="post-hero-title" href="index.html">blog</a>
+            </div>
+          `;
+        }
 
         article.innerHTML = `
           <div class="post-meta">${formatDate(meta.date)}</div>
-          <div class="post-content">${marked.parse(body)}</div>
+          <div class="post-content">${marked.parse(processSpoilerImages(body))}</div>
         `;
       } catch (err) {
-        article.innerHTML = `<p class="empty-state">Could not load entry: ${err.message}</p>`;
+        article.innerHTML = `<p class="empty-state">Could not load blog post: ${err.message}</p>`;
       }
     }
 

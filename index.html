@@ -15,7 +15,7 @@
 
     <main>
       <ul class="post-list" id="post-list">
-        <li class="empty-state">Loading entries…</li>
+        <li class="empty-state">Loading blog posts…</li>
       </ul>
     </main>
 
@@ -29,19 +29,24 @@
         const posts = await loadAllPosts();
 
         if (posts.length === 0) {
-          list.innerHTML = '<li class="empty-state">No entries yet.</li>';
+          list.innerHTML = '<li class="empty-state">No blog posts yet.</li>';
           return;
         }
 
-        list.innerHTML = posts.map((post) => `
-          <li>
+        list.innerHTML = posts.map((post) => {
+          const bannerStyle = post.banner
+            ? ` style="background-image: linear-gradient(rgba(21,22,26,0.55), rgba(21,22,26,0.55)), url('${post.banner}'); background-size: cover; background-position: center;"`
+            : '';
+          return `
+          <li${bannerStyle}>
             <a href="post.html?p=${encodeURIComponent(post.filename)}">
               <span class="entry-date">${formatDate(post.date)}</span>
               <h2 class="entry-title">${post.title}</h2>
-              <p class="entry-excerpt">${excerptOf(post.body)}</p>
+              <p class="entry-excerpt">${post.description || excerptOf(post.body)}</p>
             </a>
           </li>
-        `).join('');
+        `;
+        }).join('');
       } catch (err) {
         list.innerHTML = `<li class="empty-state">Could not load entries: ${err.message}</li>`;
       }
