@@ -2,7 +2,7 @@
 title: Introduction
 date: 21/6/2026
 description: An Introduction to my blog
-banner: https://i.imgur.com/xOx2mTz.png
+banner: https://i.imgur.com/23EtLo8.png
 ---
 
 Hello! Welcome to my blog. Here is what I'm gonna blog about:
