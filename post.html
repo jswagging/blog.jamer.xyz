@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title id="page-title">blog</title>
+<link rel="stylesheet" href="resources/css/style.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+</head>
+<body>
+  <div class="site">
+
+    <header class="site-header no-rule">
+      <a href="index.html"><span class="site-title">blog</span></a>
+    </header>
+
+    <main>
+      <a class="back-link" href="index.html">&larr; Back to Main Page</a>
+      <article id="post-article">
+        <p class="empty-state">Loading…</p>
+      </article>
+    </main>
+
+  </div>
+
+  <script src="resources/js/blog.js"></script>
+  <script>
+    async function render() {
+      const params = new URLSearchParams(window.location.search);
+      const filename = params.get('p');
+      const article = document.getElementById('post-article');
+
+      if (!filename) {
+        article.innerHTML = '<p class="empty-state">No entry specified.</p>';
+        return;
+      }
+
+      try {
+        const { meta, body } = await loadPost(filename);
+        const title = meta.title || filename.replace(/\.md$/, '');
+        document.getElementById('page-title').textContent = title + ' — blog';
+
+        article.innerHTML = `
+          <div class="post-meta">${formatDate(meta.date)}</div>
+          <div class="post-content">${marked.parse(body)}</div>
+        `;
+      } catch (err) {
+        article.innerHTML = `<p class="empty-state">Could not load entry: ${err.message}</p>`;
+      }
+    }
+
+    render();
+  </script>
+</body>
+</html>
