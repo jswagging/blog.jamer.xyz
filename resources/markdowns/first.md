@@ -1,6 +1,6 @@
 ---
 title: HELLO WORLD
-date: 21/6/2026
+date: 2026-06-21
 ---
 
 # HELLO WORLD THIS IS MY BLOG
