@@ -29,7 +29,7 @@
         const posts = await loadAllPosts();
 
         if (posts.length === 0) {
-          list.innerHTML = '<li class="empty-state">No entries yet. Drop a .md file in /posts to get started.</li>';
+          list.innerHTML = '<li class="empty-state">No entries yet.</li>';
           return;
         }
 
