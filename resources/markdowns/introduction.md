@@ -12,6 +12,6 @@ I'm gonna be blogging about the following topics:
 - Projects (e.g. personal projects, multi person projects, updates etc.)
 - Opinions on stuff I want to talk about
 - Talking about interesting things I find (and showing them)
-- Answering or talking about questions (submit them on discord maybe)
+- Answering or talking about questions (submit them on discord: jamerchgit)
 
 That's all for this post. See you soon!
